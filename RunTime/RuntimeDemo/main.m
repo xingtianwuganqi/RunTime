@@ -148,29 +148,68 @@ int main(int argc, char * argv[]) {
 //    [instance performSelector:@selector(mysubMethod1:)];
     [instance performSelector:@selector(method1)];
 
-    // 动态创建对象
+    // 动态创建对象, 在指定的位置(bytes)创建类实例。
     id theObject = class_createInstance(MyClass.class, 0); // 相当于alloc
     id str1 = [theObject init];
     NSLog(@"str1 的类名：%@",[str1 class]);
     id str2 = [[NSString alloc]initWithString:@"test"];
     NSLog(@"st2 的类型 %@",[str2 class]);
     
-    // 实例操作函数
+    /*
+     实例操作函数
+     实例操作函数主要是针对我们创建的实例对象的一系列操作函数，我们可以使用这组函数来从实例对象中获取我们想要的一些信息，如实例对象中变量的值
+     */
+    //1.针对整个对象进行操作的函数，这类函数包含
 //    NSObject *a = [[NSObject alloc] init];
+    //'object_copy'不可用:在自动引用计数模式下不可用
 //    id newB = object_copy(a, class_getInstanceSize(MyClass.class));
     
+    //2针对对象实例变量进行操作的函数
+    
+    // 返回指向给定对象分配的任何额外字节的指针
+    object_getIndexedIvars(theObject);
+
+    
+    
+    Ivar theStr = class_getInstanceVariable(cls, "_string");
+
+    // 设置对象中实例变量的值
+    object_setIvar(theObject,theStr , @"hello");
+    // 返回对象中实例变量的值
+    id strValue = object_getIvar(theObject, theStr);
+    NSLog(@"theObject 的 value 是 %@",strValue);
+    
+    // 3.针对对象的类进行操作的函数
+    // 返回给定对象的类名
+    char *name = object_getClassName(theObject);
+    NSLog(@"theObject class name is %s",name);
+    
+    // 返回对象的类
+    Class className = object_getClass(theObject);
+    NSLog(@"theOBject class's name %s",class_getName(className));
+    
+    // 返回对象的类
+    Class nCls = object_setClass(theObject, newCls);
+    NSLog(@"set theOBject class's name %s",class_getName(nCls));
+
+    
+    
     // 获取类定义
+    /*
+     Objective-C动态运行库会自动注册我们代码中定义的所有的类。我们也可以在运行时创建类定义并使用objc_addClass函数来注册它们
+     */
     int numClasses;
     Class *classes = NULL;
     numClasses = objc_getClassList(NULL, 0);
     if (numClasses > 0) {
+        //ARC不允许将非objective - c指针类型‘void *’隐式转换为‘剩余的unsafe_unretained类*’
 //        classes = malloc(sizeof(Class) * numClasses);
 //        numClasses = objc_getClassList(classes, numClasses)
     }
 
-    // 方法和消息
-    SEL sell = @selector(method1);
-    NSLog(@"sel : %p",sell);
+   // 成员和成员属性
+    
+    
     
     return 0;
 }
