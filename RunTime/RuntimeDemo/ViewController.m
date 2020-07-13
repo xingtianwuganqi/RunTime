@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-
+#import "UIView+TapBlock.h"
 @interface ViewController ()
 
 @end
@@ -18,6 +18,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor blueColor];
+    
+    [self.view setTapActionWithBlock:^{
+        NSLog(@"点击");
+    }];
 }
 
 
