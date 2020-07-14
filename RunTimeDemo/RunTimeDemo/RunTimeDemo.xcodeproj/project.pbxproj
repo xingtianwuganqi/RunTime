@@ -14,6 +14,7 @@
 		C46937D824BC3E9B008B20D0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C46937D724BC3E9B008B20D0 /* main.m */; };
 		C46937E024BC3F45008B20D0 /* UIView+TapBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = C46937DF24BC3F45008B20D0 /* UIView+TapBlock.m */; };
 		C46937E324BC4678008B20D0 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C46937E224BC4678008B20D0 /* MainViewController.m */; };
+		C46937E824BD9028008B20D0 /* UIViewController+Tracking.m in Sources */ = {isa = PBXBuildFile; fileRef = C46937E724BD9028008B20D0 /* UIViewController+Tracking.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,8 @@
 		C46937DF24BC3F45008B20D0 /* UIView+TapBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TapBlock.m"; sourceTree = "<group>"; };
 		C46937E124BC4678008B20D0 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		C46937E224BC4678008B20D0 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		C46937E624BD9028008B20D0 /* UIViewController+Tracking.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tracking.h"; sourceTree = "<group>"; };
+		C46937E724BD9028008B20D0 /* UIViewController+Tracking.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Tracking.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 				C46937DF24BC3F45008B20D0 /* UIView+TapBlock.m */,
 				C46937E124BC4678008B20D0 /* MainViewController.h */,
 				C46937E224BC4678008B20D0 /* MainViewController.m */,
+				C46937E624BD9028008B20D0 /* UIViewController+Tracking.h */,
+				C46937E724BD9028008B20D0 /* UIViewController+Tracking.m */,
 			);
 			path = RunTimeDemo;
 			sourceTree = "<group>";
@@ -146,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C46937E824BD9028008B20D0 /* UIViewController+Tracking.m in Sources */,
 				C46937E024BC3F45008B20D0 /* UIView+TapBlock.m in Sources */,
 				C46937C724BC3E9A008B20D0 /* AppDelegate.m in Sources */,
 				C46937E324BC4678008B20D0 /* MainViewController.m in Sources */,

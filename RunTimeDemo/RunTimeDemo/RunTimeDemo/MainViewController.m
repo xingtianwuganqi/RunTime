@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "UIView+TapBlock.h"
+#import "UIViewController+Tracking.h"
 @interface MainViewController ()
 
 @end
@@ -16,6 +17,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     self.view.backgroundColor = [UIColor whiteColor];
     self.view.userInteractionEnabled = YES;
     [self.view setTapActionWithBlock:^{
@@ -26,6 +28,8 @@
     
 }
                                 
-                    
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+}
 
 @end
