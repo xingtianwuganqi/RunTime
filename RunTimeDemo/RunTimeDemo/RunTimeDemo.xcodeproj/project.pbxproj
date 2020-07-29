@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C4601DC324D154870029682D /* UIScrollView+EmptyDateSet.m in Sources */ = {isa = PBXBuildFile; fileRef = C4601DC224D154870029682D /* UIScrollView+EmptyDateSet.m */; };
 		C46937C724BC3E9A008B20D0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C46937C624BC3E9A008B20D0 /* AppDelegate.m */; };
 		C46937D024BC3E9A008B20D0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C46937CE24BC3E9A008B20D0 /* Main.storyboard */; };
 		C46937D224BC3E9B008B20D0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C46937D124BC3E9B008B20D0 /* Assets.xcassets */; };
@@ -18,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C4601DC124D154870029682D /* UIScrollView+EmptyDateSet.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+EmptyDateSet.h"; sourceTree = "<group>"; };
+		C4601DC224D154870029682D /* UIScrollView+EmptyDateSet.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+EmptyDateSet.m"; sourceTree = "<group>"; };
 		C46937C224BC3E9A008B20D0 /* RunTimeDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RunTimeDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C46937C524BC3E9A008B20D0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C46937C624BC3E9A008B20D0 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -77,6 +80,8 @@
 				C46937E224BC4678008B20D0 /* MainViewController.m */,
 				C46937E624BD9028008B20D0 /* UIViewController+Tracking.h */,
 				C46937E724BD9028008B20D0 /* UIViewController+Tracking.m */,
+				C4601DC124D154870029682D /* UIScrollView+EmptyDateSet.h */,
+				C4601DC224D154870029682D /* UIScrollView+EmptyDateSet.m */,
 			);
 			path = RunTimeDemo;
 			sourceTree = "<group>";
@@ -153,6 +158,7 @@
 			files = (
 				C46937E824BD9028008B20D0 /* UIViewController+Tracking.m in Sources */,
 				C46937E024BC3F45008B20D0 /* UIView+TapBlock.m in Sources */,
+				C4601DC324D154870029682D /* UIScrollView+EmptyDateSet.m in Sources */,
 				C46937C724BC3E9A008B20D0 /* AppDelegate.m in Sources */,
 				C46937E324BC4678008B20D0 /* MainViewController.m in Sources */,
 				C46937D824BC3E9B008B20D0 /* main.m in Sources */,
