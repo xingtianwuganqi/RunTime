@@ -11,7 +11,7 @@
 #import "UIViewController+Tracking.h"
 #import "UIScrollView+EmptyDateSet.h"
 
-@interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,EmptyDateSource>
+@interface MainViewController ()<UITableViewDataSource,UITableViewDelegate,EmptyDataSource>
 
 @property (nonatomic,strong) UITableView * tableview;
 

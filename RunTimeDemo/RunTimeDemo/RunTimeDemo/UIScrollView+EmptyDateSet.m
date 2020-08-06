@@ -177,6 +177,7 @@
 @end
 
 static char const * const kEmptyDataSetSource = "emptyDataSetSource";
+static char const * const kEmptyDataSetDelegate = "emptyDataSetDelegate";
 static char const * const kEmptyDataView  = "emptyDataView";
 @interface UIScrollView () <UIGestureRecognizerDelegate>
 // 添加属性
@@ -187,15 +188,36 @@ static char const * const kEmptyDataView  = "emptyDataView";
 @implementation UIScrollView (EmptyDateSet)
 
 #pragma mark set方法
-- (void)setEmptyDataSource:(id<EmptyDateSource>)dataSource {
-        
+- (void)setEmptyDataSource:(id<EmptyDataSource>)dataSource {
+    
+    if (!dataSource || ![self canDisplay]) {
+        [self invalidate];
+    }
+    
     objc_setAssociatedObject(self, kEmptyDataSetSource, [[EmptyDataWeakObjectContainer alloc]initWithWeakObject:dataSource], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    
+    // 方法互换
+    
+}
+
+- (void)setEmptyDataDelegate:(id<EmptyDataDelegate>)emptyDataDelegate {
+    
+    if (!emptyDataDelegate) {
+        [self invalidate];
+    }
+    
+    objc_setAssociatedObject(self, kEmptyDataSetDelegate, [[EmptyDataWeakObjectContainer alloc] initWithWeakObject:emptyDataDelegate], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark get方法
-- (id<EmptyDateSource>)emptyDataSource {
+- (id<EmptyDataSource>)emptyDataSource {
     EmptyDataWeakObjectContainer * objec = objc_getAssociatedObject(self, kEmptyDataSetSource);
     return objec.weakObject;
+}
+
+- (id<EmptyDataDelegate>)emptyDataDelegate {
+    EmptyDataWeakObjectContainer * objc = objc_getAssociatedObject(self, kEmptyDataSetDelegate);
+    return objc.weakObject;
 }
 
 #pragma mark emptyDataView set方法
@@ -223,10 +245,93 @@ static char const * const kEmptyDataView  = "emptyDataView";
 
 - (void)emptyText {
     if (self.emptyDataSource && [self.emptyDataSource respondsToSelector:@selector(titleForEmtpyDateSet:)]) {
-        NSString * string = [self.emptyDataSource titleForEmtpyDateSet:self];
+        NSString * string = [self.emptyDataSource titleForEmtpyDataSet:self];
         NSLog(@"%@",string);
     }else{
         NSLog(@"emptyDataSource 为空");
+    }
+}
+
+// 是否可以显示，判断是否有这个属性，是否遵守了这个协议
+- (BOOL)canDisplay {
+    if (self.emptyDataSource && [self.emptyDataSource conformsToProtocol:@protocol(EmptyDataSource)]) {
+        if ([self isKindOfClass:[UITableView class]] || [self isKindOfClass:[UICollectionView class]] || [self isKindOfClass:[UIScrollView class]]) {
+            return YES;
+        }
+    }
+    return NO;
+}
+
+// 判断是否有数据
+- (NSInteger)itemsCount {
+    NSInteger items = 0;
+    // 如果UIScrollView 没有响应 datasource 方法，直接退出
+    if (![self respondsToSelector:@selector(dataSource)]) {
+        return items;
+    }
+    if ([self isKindOfClass:[UITableView class]]) {
+        UITableView *tableView = (UITableView *)self;
+        id<UITableViewDataSource> dataSource = tableView.dataSource;
+        NSInteger sections = 1;
+        if (dataSource && [dataSource respondsToSelector:@selector(numberOfSectionsInTableView:)]) {
+            sections = [dataSource numberOfSectionsInTableView:tableView];
+        }
+        
+        if (dataSource && [dataSource respondsToSelector:@selector(tableView:numberOfRowsInSection:)]) {
+            for (NSInteger section = 0; section < sections; section ++) {
+                items += [dataSource tableView:tableView numberOfRowsInSection:section];
+            }
+        }
+    }else if ([self isKindOfClass:[UICollectionView class]]) {
+        UICollectionView *collectionView = (UICollectionView *)self;
+        id<UICollectionViewDataSource> dataSource = collectionView.dataSource;
+        NSInteger sections = 1;
+        if (dataSource && [dataSource respondsToSelector:@selector(numberOfSectionsInCollectionView:)]) {
+            sections = [dataSource numberOfSectionsInCollectionView:collectionView];
+        }
+        
+        if (dataSource && [dataSource respondsToSelector:@selector(collectionView:numberOfItemsInSection:)]) {
+            for (NSInteger section = 0; section < sections; section ++) {
+                items += [dataSource collectionView:collectionView numberOfItemsInSection:section];
+            }
+        }
+    }
+    return items;
+}
+
+// 获取DataSource 返回的字符串
+- (NSString *) titleLabelString {
+    if (self.emptyDataSource && [self.emptyDataSource respondsToSelector:@selector(titleForEmtpyDataSet:)]) {
+        NSString *string = [self.emptyDataSource titleForEmtpyDataSet:self];
+        if (string) NSAssert([string isKindOfClass:[NSString class]], @"You must return a valid NSAttributedString object for -titleForEmptyDataSet:");
+        return string;
+    }
+    return nil;
+}
+
+- (void)invalidate {
+    [self dzn_willDisappear];
+    
+    if (self.emptyDataView) {
+        [self.emptyDataView prepareForReuse];
+        [self.emptyDataView removeFromSuperview];
+        [self setEmptyDataView:nil];
+    }
+    self.scrollEnabled = YES;
+    
+    [self dzn_didDisappear];
+}
+
+- (void)dzn_willDisappear {
+    if (self.emptyDataDelegate && [self.emptyDataDelegate respondsToSelector:@selector(emptyDataSetWillDisappear:)]) {
+        [self.emptyDataDelegate emptyDataSetWillDisappear:self];
+    
+    }
+}
+
+- (void)dzn_didDisappear {
+    if (self.emptyDataDelegate && [self.emptyDataDelegate respondsToSelector:@selector(emptyDataSetDidDisappear:)]) {
+        [self.emptyDataDelegate emptyDataSetDidDisappear:self];
     }
 }
 

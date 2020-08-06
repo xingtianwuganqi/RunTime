@@ -10,17 +10,28 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol EmptyDateSource <NSObject>
+@protocol EmptyDataSource <NSObject>
 
 @optional
 
--(NSString *)titleForEmtpyDateSet:(UIScrollView *) scrollView;
+-(NSString *)titleForEmtpyDataSet:(UIScrollView *) scrollView;
+
+@end
+
+@protocol EmptyDataDelegate <NSObject>
+
+@optional
+
+- (void)emptyDataSetWillDisappear:(UIScrollView *)scrollView;
+- (void)emptyDataSetDidDisappear: (UIScrollView *)scrollView;
+
 
 @end
 
 @interface UIScrollView (EmptyDateSet)
 
-@property(nonatomic, weak, nullable) id <EmptyDateSource>emptyDataSource;
+@property(nonatomic, weak, nullable) id <EmptyDataSource>emptyDataSource;
+@property(nonatomic, weak, nullable) id <EmptyDataDelegate> emptyDataDelegate;
 - (void)emptyText;
 @end
 
